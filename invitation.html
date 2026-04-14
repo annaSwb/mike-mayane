@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Invitation | Mayane & Mikhael</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sage: #8DA399;
+            --dusty-blue: #B0C4DE;
+            --gold: #C5A059;
+            --soft-white: #FDFBF7;
+            --text-dark: #2c2c2c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--soft-white);
+            color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at center, #ffffff 0%, #F2EEE5 100%);
+            line-height: 1.5;
+        }
+
+        .cormorant { font-family: 'Cormorant Garamond', serif; }
+
+        #musicToggle {
+            position: fixed;
+            bottom: calc(25px + env(safe-area-inset-bottom));
+            right: 25px;
+            z-index: 99999;
+            width: 55px; height: 55px;
+            background: white; border: none; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 24px; box-shadow: 0 8px 25px rgba(141, 163, 153, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #musicToggle.playing {
+            animation: pulseMusic 2s infinite;
+            background: linear-gradient(45deg, var(--sage), var(--dusty-blue));
+            color: white;
+        }
+
+        @keyframes pulseMusic { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        header {
+            height: 55vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1), var(--soft-white)), url('pyramides_fond.jpg') no-repeat center center / cover;
+            text-align: center; padding: 20px;
+        }
+
+        .logo-main {
+            width: clamp(120px, 35vw, 200px);
+            height: auto;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        .container { max-width: 650px; margin: -30px auto 40px; padding: 0 15px; position: relative; z-index: 10; }
+
+        .wedding-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px; padding: 25px 20px; margin-bottom: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center; position: relative; backdrop-filter: blur(5px);
+        }
+
+        .wedding-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--sage), var(--dusty-blue), var(--gold));
+        }
+
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+
+        .btn-action {
+            display: inline-flex; justify-content: center; align-items: center; width: 100%;
+            padding: 14px; background: linear-gradient(45deg, var(--sage), var(--dusty-blue));
+            color: white; text-decoration: none; border-radius: 50px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+            border: none; cursor: pointer; transition: 0.3s;
+        }
+
+        .btn-outline {
+            background: transparent; border: 1.5px solid var(--gold); color: var(--gold);
+            margin-top: 0; width: auto; padding: 10px 15px; font-size: 0.75rem; flex: 1;
+        }
+
+        .image-section { width: 100%; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); overflow: hidden; margin: 25px 0; }
+        
+        /* AJOUT DE VOTRE IMAGE COUPLE ICI */
+        .img-couple { height: 450px; background: url('couple1.jpeg') no-repeat center center / cover; }
+        .img-mairie { height: 250px; background: url('mairie_stbrice.jpg') no-repeat center center / cover; background-color: #eee; }
+
+        .card-type { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--sage); margin-bottom: 10px; font-weight: 600; }
+        .card-title { font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--gold); margin-bottom: 10px; }
+        .highlight { color: var(--sage); font-weight: 600; display: block; margin: 5px 0; font-size: 1.1rem; }
+
+        .rsvp-form { text-align: left; margin-top: 20px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; color: #555; text-transform: uppercase; }
+        .required::after { content: " *"; color: var(--sage); }
+
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: inherit; }
+
+        .people-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+        hr { border: 0; border-top: 1px solid #eee; margin: 25px 0; }
+        footer { text-align: center; padding: 40px 20px; background: white; }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .petal { position: fixed; background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); border-radius: 150% 0 150% 0; opacity: 0; pointer-events: none; z-index: 5000; }
+        @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 100% { transform: translateY(105vh) translateX(var(--x-end)) rotate(var(--r-end)); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+<button id="musicToggle">🎶</button>
+<audio id="weddingMusic" src="votre_musique.mp3" preload="auto" loop></audio>
+
+<header>
+    <img src="logo.png" alt="Mayane & Mikhael" class="logo-main">
+    <p class="cormorant" style="font-size: 1.4rem; color: var(--gold); font-style: italic;">B'ezrat Hachem</p>
+</header>
+
+<div class="container">
+    <div class="wedding-card reveal">
+        <p class="card-type">Union Civile</p>
+        <h3 class="card-title cormorant">La Mairie</h3>
+        <div class="card-body">
+            <span class="highlight">Mercredi 8 Juillet 2026</span>
+            À la Mairie de <strong>SAINT-BRICE-SOUS-FORÊT</strong><br>
+            Cérémonie civile
+        </div>
+        <div class="btn-group">
+            <a href="https://www.waze.com/ul?q=Mairie+Saint-Brice-sous-Foret" target="_blank" class="btn-action btn-outline">Waze</a>
+            <button onclick="addToCalendar('mairie')" class="btn-action btn-outline">Bloquer la Date</button>
+        </div>
+    </div>
+
+    <div class="image-section img-couple reveal"></div>
+
+    <div class="wedding-card reveal">
+        <img src="phrase12.png" alt="Bénédiction" style="width: 80%; max-width: 300px; margin: 0 auto 10px; display: block; filter: sepia(1) saturate(0.5);">
+        <p class="card-type" style="margin-bottom: 20px;">Cérémonie Religieuse</p>
+        <div style="margin: 25px 0;">
+            <p style="font-size: 1rem; color: var(--text-dark); line-height: 1.6; font-style: italic;">
+                C'est avec une immense joie que nous vous invitons<br>à célébrer notre union.
+            </p>
+        </div>
+        <h3 class="card-title cormorant">La Houppa & Soirée</h3>
+        <div class="card-body">
+            <span class="cormorant" style="font-size: 2.2rem; color: var(--sage); display: block; margin-bottom: 10px;">Mayane & Mikhael</span>
+            <span class="highlight">Mercredi 29 Juillet 2026</span>
+            <p style="margin-top: 10px;">
+                Aux <strong>PYRAMIDES DU PONT MARLY</strong><br>
+                Accueil à : <span style="color:var(--gold); font-weight:600;">17h30</span>
+            </p>
+        </div>
+        <div class="btn-group">
+            <a href="https://www.waze.com/ul?q=Les+Pyramides+Le+Port+Marly" target="_blank" class="btn-action btn-outline">Waze</a>
+            <button onclick="addToCalendar('houppa')" class="btn-action btn-outline">Bloquer la Date</button>
+        </div>
+    </div>
+
+    <div class="wedding-card reveal">
+        <p class="card-type">Réponse souhaitée</p>
+        <h3 class="card-title cormorant">Confirmation</h3>
+        <form id="rsvpForm" class="rsvp-form">
+            <div class="form-group">
+                <label class="required">Nom & Prénom</label>
+                <input type="text" name="nom_complet" required placeholder="Ex: Famille Zana">
+            </div>
+            <hr>
+            <div class="form-group">
+                <label class="required">Présence à la Mairie (8 Juillet) ?</label>
+                <select name="presence_mairie" id="presence_mairie" onchange="toggleMairie()" required>
+                    <option value="" disabled selected>Choisissez une option</option>
+                    <option value="oui">OUI, avec plaisir</option>
+                    <option value="non">NON, avec regret</option>
+                </select>
+            </div>
+            <div id="section_mairie" style="display:none; margin-bottom: 20px;">
+                <div class="people-grid">
+                    <div class="form-group"><label>Adultes</label><input type="number" name="adultes_mairie" min="0" value="0"></div>
+                    <div class="form-group"><label>Enfants</label><input type="number" name="enfants_mairie" min="0" value="0"></div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label class="required">Présence à la Houppa (29 Juillet) ?</label>
+                <select name="presence_houppa" id="presence_houppa" onchange="toggleHouppa()" required>
+                    <option value="" disabled selected>Choisissez une option</option>
+                    <option value="oui">OUI, avec plaisir</option>
+                    <option value="non">NON, avec regret</option>
+                </select>
+            </div>
+            <div id="section_houppa" style="display:none; margin-bottom: 20px;">
+                <div class="people-grid">
+                    <div class="form-group"><label>Adultes</label><input type="number" name="adultes_houppa" min="0" value="0"></div>
+                    <div class="form-group"><label>Enfants</label><input type="number" name="enfants_houppa" min="0" value="0"></div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label>Un mot pour nous ?</label>
+                <textarea name="message" rows="3" placeholder="Votre message..."></textarea>
+            </div>
+            <button type="submit" id="submitBtn" class="btn-action">Confirmer ma venue</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <p class="cormorant" style="font-size: 1.4rem; color: var(--gold);">Hâte de vous retrouver</p>
+    <p style="font-size: 0.65rem; color: #aaa;">M & M - 2026</p>
+</footer>
+
+<script>
+    // --- RSVP CONFIGURATION ---
+    const scriptURL = 'VOTRE_URL_GOOGLE_SCRIPT_ICI';
+    const form = document.getElementById('rsvpForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Envoi en cours...";
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
+            .then(() => {
+                submitBtn.innerText = "Merci ! ✨";
+                submitBtn.style.background = "#8DA399";
+                alert("Votre réponse a été enregistrée.");
+            })
+            .catch(() => {
+                alert("Erreur lors de l'envoi.");
+                submitBtn.disabled = false;
+            });
+    });
+
+    // --- CALENDRIER ---
+    function addToCalendar(type) {
+        const events = {
+            mairie: {
+                title: "Mariage Mayane & Mikhael - Mairie",
+                start: "20260708T140000",
+                location: "Mairie de Saint-Brice-sous-Forêt",
+                gUrl: "https://www.google.com/calendar/render?action=TEMPLATE&text=Mariage+Mayane+%26+Mikhael+-+Mairie&dates=20260708T120000Z/20260708T140000Z&location=Mairie+de+Saint-Brice-sous-Foret"
+            },
+            houppa: {
+                title: "Mariage Mayane & Mikhael - Houppa",
+                start: "20260729T173000",
+                location: "Les Pyramides, Le Port-Marly",
+                gUrl: "https://www.google.com/calendar/render?action=TEMPLATE&text=Mariage+Mayane+%26+Mikhael+-+Houppa&dates=20260729T153000Z/20260729T220000Z&location=Les+Pyramides+Port+Marly"
+            }
+        };
+        const ev = events[type];
+        window.open(ev.gUrl, '_blank');
+    }
+
+    function toggleMairie() { document.getElementById('section_mairie').style.display = (document.getElementById('presence_mairie').value === 'oui') ? 'block' : 'none'; }
+    function toggleHouppa() { document.getElementById('section_houppa').style.display = (document.getElementById('presence_houppa').value === 'oui') ? 'block' : 'none'; }
+
+    const audio = document.getElementById('weddingMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    musicToggle.addEventListener('click', () => {
+        if (audio.paused) { audio.play(); musicToggle.classList.add('playing'); musicToggle.innerText = "💖"; }
+        else { audio.pause(); musicToggle.classList.remove('playing'); musicToggle.innerText = "🎶"; }
+    });
+
+    function reveal() {
+        document.querySelectorAll(".reveal").forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
+        });
+    }
+    window.addEventListener("scroll", reveal);
+    reveal();
+
+    function createPetal() {
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        const size = Math.random() * 15 + 10;
+        petal.style.width = `${size}px`; petal.style.height = `${size * 1.2}px`;
+        petal.style.left = `${Math.random() * window.innerWidth}px`;
+        petal.style.top = `-20px`;
+        petal.style.setProperty('--x-end', `${(Math.random() - 0.5) * 200}px`);
+        petal.style.setProperty('--r-end', `${Math.random() * 360}deg`);
+        petal.style.animation = `fall ${Math.random() * 5 + 5}s linear forwards`;
+        document.body.appendChild(petal);
+        setTimeout(() => petal.remove(), 8000);
+    }
+    setInterval(createPetal, 600);
+</script>
+</body>
+</html>
