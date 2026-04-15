@@ -79,8 +79,6 @@
             background: linear-gradient(90deg, var(--sage), var(--dusty-blue), var(--gold));
         }
 
-        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
-
         .btn-action {
             display: inline-flex; justify-content: center; align-items: center; width: 100%;
             padding: 14px; background: linear-gradient(45deg, var(--sage), var(--dusty-blue));
@@ -316,28 +314,34 @@
     function toggleMairie() { document.getElementById('section_mairie').style.display = (document.getElementById('presence_mairie').value === 'oui') ? 'block' : 'none'; }
     function toggleHouppa() { document.getElementById('section_houppa').style.display = (document.getElementById('presence_houppa').value === 'oui') ? 'block' : 'none'; }
 
-    // --- GESTION MUSIQUE ---
+    // --- SYSTÈME AUDIO BLINDÉ ---
     const audio = document.getElementById('weddingMusic');
     const musicToggle = document.getElementById('musicToggle');
-    let hasInteracted = false;
+    let hasPlayed = false;
 
-    function playAudio() {
-        if (!hasInteracted) {
+    function forcePlay() {
+        if (!hasPlayed) {
             audio.play().then(() => {
-                hasInteracted = true;
+                hasPlayed = true;
                 musicToggle.classList.add('playing');
                 musicToggle.innerText = "💖";
-            }).catch(error => console.log("Lancement automatique bloqué par le navigateur, en attente de scroll..."));
+                // On retire les écouteurs une fois que ça joue
+                window.removeEventListener('touchstart', forcePlay);
+                window.removeEventListener('scroll', forcePlay);
+                window.removeEventListener('mousedown', forcePlay);
+            }).catch(e => {
+                console.log("Lecture en attente d'interaction réelle...");
+            });
         }
     }
 
-    // Lancement au scroll
-    window.addEventListener('scroll', playAudio, { once: true });
-    // Lancement au premier clic n'importe où (sécurité supplémentaire)
-    window.addEventListener('click', playAudio, { once: true });
+    // Le secret : écouter l'événement 'touchstart' qui est déclenché au tout début d'un scroll sur mobile
+    window.addEventListener('touchstart', forcePlay, { passive: true });
+    window.addEventListener('scroll', forcePlay, { passive: true });
+    window.addEventListener('mousedown', forcePlay);
 
     musicToggle.addEventListener('click', (e) => {
-        e.stopPropagation(); // Évite de déclencher le listener 'click' du dessus
+        e.stopPropagation();
         if (audio.paused) {
             audio.play();
             musicToggle.classList.add('playing');
