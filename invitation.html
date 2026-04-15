@@ -55,12 +55,12 @@
         }
 
         .logo-main {
-    width: clamp(200px, 60vw, 350px); /* Taille agrandie */
-    height: auto;
-    margin-bottom: 20px;
-    opacity: 1; /* Un peu plus net */
-    animation: float 4s ease-in-out infinite;
-}
+            width: clamp(120px, 35vw, 200px);
+            height: auto;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            animation: float 4s ease-in-out infinite;
+        }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
@@ -106,7 +106,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 30px;
+            margin: 25px 0;
             text-align: center;
             font-size: 0.8rem;
             line-height: 1.6;
@@ -114,7 +114,7 @@
         }
 
         .family-box {
-            flex: 1; /* Chaque colonne prend 50% de la place */
+            flex: 1;
             font-style: italic;
             color: #444;
         }
@@ -127,8 +127,6 @@
         .family-box.right {
             padding-left: 5px;
         }
-
-        /* ------------------------------------------- */
 
         .rsvp-form { text-align: left; margin-top: 20px; }
         .form-group { margin-bottom: 20px; }
@@ -181,9 +179,11 @@
     <div class="image-section img-couple reveal"></div>
 
     <div class="wedding-card reveal">
-        <img src="phrase12.png" alt="Bénédiction" style="width: 80%; max-width: 300px; margin: 0 auto 15px; display: block; filter: sepia(1) saturate(0.5);">
+        <img src="phrase12.png" alt="Bénédiction" style="width: 80%; max-width: 300px; margin: 0 auto 10px; display: block; filter: sepia(1) saturate(0.5);">
         
-        <p class="card-type" style="margin-bottom: 25px;">Cérémonie Religieuse</p>
+        <img src="houppa.png" alt="Houppa Decor" style="width: 95%; max-width: 550px; margin: 20px auto 25px; display: block; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+        
+        <p class="card-type" style="margin-bottom: 10px;">Cérémonie Religieuse</p>
 
         <div class="family-container">
             <div class="family-box left">
@@ -231,7 +231,7 @@
             </div>
             <hr>
             <div class="form-group">
-                <label class="required">Présence à la Mairie ?</label>
+                <label class="required">Serez-vous présent à la Mairie ?</label>
                 <select name="presence_mairie" id="presence_mairie" onchange="toggleMairie()" required>
                     <option value="" disabled selected>Choisissez une option</option>
                     <option value="oui">OUI, avec plaisir</option>
@@ -246,7 +246,7 @@
             </div>
             <hr>
             <div class="form-group">
-                <label class="required">Présence à la Houppa ?</label>
+                <label class="required">Serez-vous présent à la Houppa ?</label>
                 <select name="presence_houppa" id="presence_houppa" onchange="toggleHouppa()" required>
                     <option value="" disabled selected>Choisissez une option</option>
                     <option value="oui">OUI, avec plaisir</option>
@@ -261,7 +261,7 @@
             </div>
             <hr>
             <div class="form-group">
-                <label>Un mot pour nous ?</label>
+                <label>Un message pour les mariés ?</label>
                 <textarea name="message" rows="3" placeholder="Votre petit mot doux..."></textarea>
             </div>
             <button type="submit" id="submitBtn" class="btn-action">Envoyer ma réponse</button>
