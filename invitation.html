@@ -101,7 +101,6 @@
         .card-title { font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--gold); margin-bottom: 10px; }
         .highlight { color: var(--sage); font-weight: 600; display: block; margin: 5px 0; font-size: 1.1rem; }
 
-        /* --- STYLE DES FAMILLES EN DEUX COLONNES --- */
         .family-container {
             display: flex;
             justify-content: space-between;
@@ -154,7 +153,7 @@
 <body>
 
 <button id="musicToggle">🎶</button>
-<audio id="weddingMusic" src="musique.mp3" preload="auto" loop></audio>
+<audio id="weddingMusic" src="votre_musique.mp3" preload="auto" loop></audio>
 
 <header>
     <img src="logo.png" alt="Mayane & Mikhael" class="logo-main">
@@ -179,9 +178,9 @@
     <div class="image-section img-couple reveal"></div>
 
     <div class="wedding-card reveal">
-        <img src="phrase12.png" alt="Bénédiction" style="width: 80%; max-width: 300px; margin: 0 auto 10px; display: block; filter: sepia(1) saturate(0.5);">
+        <img src="phrase12.png" alt="Bénédiction" style="width: 100%; max-width: 650px; margin: 0 auto 20px; display: block; filter: none;">
         
-        <img src="houppa.png" alt="Houppa Decor" style="width: 95%; max-width: 550px; margin: 20px auto 25px; display: block; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+        <img src="houppa.png" alt="Houppa Decor" style="width: 95%; max-width: 550px; margin: 20px auto 25px; display: block; border-radius: 10px;">
         
         <p class="card-type" style="margin-bottom: 10px;">Cérémonie Religieuse</p>
 
@@ -317,11 +316,37 @@
     function toggleMairie() { document.getElementById('section_mairie').style.display = (document.getElementById('presence_mairie').value === 'oui') ? 'block' : 'none'; }
     function toggleHouppa() { document.getElementById('section_houppa').style.display = (document.getElementById('presence_houppa').value === 'oui') ? 'block' : 'none'; }
 
+    // --- GESTION MUSIQUE ---
     const audio = document.getElementById('weddingMusic');
     const musicToggle = document.getElementById('musicToggle');
-    musicToggle.addEventListener('click', () => {
-        if (audio.paused) { audio.play(); musicToggle.classList.add('playing'); musicToggle.innerText = "💖"; }
-        else { audio.pause(); musicToggle.classList.remove('playing'); musicToggle.innerText = "🎶"; }
+    let hasInteracted = false;
+
+    function playAudio() {
+        if (!hasInteracted) {
+            audio.play().then(() => {
+                hasInteracted = true;
+                musicToggle.classList.add('playing');
+                musicToggle.innerText = "💖";
+            }).catch(error => console.log("Lancement automatique bloqué par le navigateur, en attente de scroll..."));
+        }
+    }
+
+    // Lancement au scroll
+    window.addEventListener('scroll', playAudio, { once: true });
+    // Lancement au premier clic n'importe où (sécurité supplémentaire)
+    window.addEventListener('click', playAudio, { once: true });
+
+    musicToggle.addEventListener('click', (e) => {
+        e.stopPropagation(); // Évite de déclencher le listener 'click' du dessus
+        if (audio.paused) {
+            audio.play();
+            musicToggle.classList.add('playing');
+            musicToggle.innerText = "💖";
+        } else {
+            audio.pause();
+            musicToggle.classList.remove('playing');
+            musicToggle.innerText = "🎶";
+        }
     });
 
     function reveal() {
