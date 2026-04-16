@@ -132,7 +132,7 @@
 
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 0.95rem; }
 
-        .people-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+        .people-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 10px; }
         hr { border: 0; border-top: 1px solid #eee; margin: 25px 0; }
         footer { text-align: center; padding: 40px 20px; background: white; }
 
@@ -237,8 +237,7 @@
             </div>
             <div id="section_mairie" style="display:none; margin-bottom: 20px;">
                 <div class="people-grid">
-                    <div class="form-group"><label>Adultes</label><input type="number" name="adultes_mairie" min="0" value="0"></div>
-                    <div class="form-group"><label>Enfants</label><input type="number" name="enfants_mairie" min="0" value="0"></div>
+                    <div class="form-group"><label>Nombre de personnes</label><input type="number" name="adultes_mairie" min="0" value="0"></div>
                 </div>
             </div>
             <hr>
@@ -252,8 +251,7 @@
             </div>
             <div id="section_houppa" style="display:none; margin-bottom: 20px;">
                 <div class="people-grid">
-                    <div class="form-group"><label>Adultes</label><input type="number" name="adultes_houppa" min="0" value="0"></div>
-                    <div class="form-group"><label>Enfants</label><input type="number" name="enfants_houppa" min="0" value="0"></div>
+                    <div class="form-group"><label>Nombre de personnes</label><input type="number" name="adultes_houppa" min="0" value="0"></div>
                 </div>
             </div>
             <hr>
@@ -314,7 +312,6 @@
     function toggleMairie() { document.getElementById('section_mairie').style.display = (document.getElementById('presence_mairie').value === 'oui') ? 'block' : 'none'; }
     function toggleHouppa() { document.getElementById('section_houppa').style.display = (document.getElementById('presence_houppa').value === 'oui') ? 'block' : 'none'; }
 
-    // --- SYSTÈME AUDIO BLINDÉ ---
     const audio = document.getElementById('weddingMusic');
     const musicToggle = document.getElementById('musicToggle');
     let hasPlayed = false;
@@ -325,7 +322,6 @@
                 hasPlayed = true;
                 musicToggle.classList.add('playing');
                 musicToggle.innerText = "💖";
-                // On retire les écouteurs une fois que ça joue
                 window.removeEventListener('touchstart', forcePlay);
                 window.removeEventListener('scroll', forcePlay);
                 window.removeEventListener('mousedown', forcePlay);
@@ -335,7 +331,6 @@
         }
     }
 
-    // Le secret : écouter l'événement 'touchstart' qui est déclenché au tout début d'un scroll sur mobile
     window.addEventListener('touchstart', forcePlay, { passive: true });
     window.addEventListener('scroll', forcePlay, { passive: true });
     window.addEventListener('mousedown', forcePlay);
