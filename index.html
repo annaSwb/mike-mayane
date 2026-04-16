@@ -3,152 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mayane & Mikhael | L'Union</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    <title>Mariage de Ornella & Charles</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --gold-light: #f4e4bc;
-            --btn-grad-1: #A7C7E7; 
-            --btn-grad-2: #C1E1C1;
+            --or-luxe: #B08D57; 
+            --or-clair: #D4C59A;
+            --blanc-pur: #FFFFFF;
+            --texte-gris: #2C2C2C;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            background-color: #0a0a0a;
-            color: var(--gold-light);
-            font-family: 'Montserrat', sans-serif;
-            height: 100dvh; width: 100vw; 
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #f2f2f2; 
             overflow: hidden; 
-            display: flex; justify-content: center; align-items: center; 
-            text-align: center; position: relative;
+            perspective: 2000px;
         }
 
-        .bg-image {
-            position: absolute; top: 0; left: 0; 
+        /* --- PAGE GLOBALE --- */
+        #global-page-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: var(--blanc-pur);
+            transform-style: preserve-3d;
+            transform-origin: left center;
+            transition: transform 1.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+            box-shadow: inset 20px 0 50px rgba(0,0,0,0.02);
+        }
+
+        .page-turn-active {
+            transform: rotateY(-130deg);
+        }
+
+        /* --- CADRE FLORAL FIXE --- */
+        .background-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            background-image: url('Cadre-floral-or.png');
+            background-position: center center; 
+            background-size: cover; 
+            background-repeat: no-repeat;
+        }
+
+        /* --- SURCOUCHE FLEURS (IMAGE fleur.png) --- */
+        .floral-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 12; /* Par-dessus la photo et le titre */
+            background-image: url('fleur.png');
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            pointer-events: none; /* Laisse cliquer le bouton en dessous */
+        }
+
+        /* --- PLUIE D'OR --- */
+        #gold-rain-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 5; overflow: hidden;
+        }
+        .gold-speck {
+            position: absolute; width: 3px; height: 3px;
+            background-color: var(--or-luxe); border-radius: 50%; opacity: 0;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh); opacity: 0; }
+            20% { opacity: 0.6; }
+            100% { transform: translateY(110vh); opacity: 0; }
+        }
+
+        /* --- CONTENEUR CENTRAL --- */
+        .card-wrapper {
+            position: absolute;
+            top: 50%; 
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            width: 100%; 
+            max-width: 350px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translate(-50%, -45%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        /* --- PHOTO ARCHE --- */
+        .photo-container {
+            width: 140px;
+            height: 200px;
+            position: relative;
+            margin-bottom: 20px;
+            border: 1px solid var(--or-luxe);
+            padding: 4px; 
+            background: #fff; 
+            box-shadow: 0 10px 30px rgba(176, 141, 87, 0.15);
+            border-top-left-radius: 70px;
+            border-top-right-radius: 70px;
+        }
+
+        .photo-container img {
             width: 100%; height: 100%; 
-            z-index: -1;
-            background: url('couple.jpeg') no-repeat center center / cover;
-            filter: brightness(0.55) saturate(0.85); 
+            object-fit: cover; display: block;
+            border-top-left-radius: 67px; 
+            border-top-right-radius: 67px;
         }
 
-        .intro-container {
-            z-index: 1; 
-            opacity: 0; 
-            animation: fadeIn 2s ease-out forwards 0.5s;
-            width: 100%; padding: 0 20px;
-            display: flex; flex-direction: column; align-items: center;
-            transform: translateY(-7vh); 
-        }
-
+        /* --- TITRE --- */
         h1 {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(3.5rem, 15vw, 5.8rem);
-            font-weight: 400;
-            margin-bottom: 5px;
-            background: linear-gradient(to bottom, #fff, var(--gold-light));
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 20px rgba(0,0,0,0.9);
-            padding-bottom: 5px;
+            font-family: 'Pinyon Script', cursive;
+            font-size: 2.5rem;
+            color: var(--or-luxe);
+            margin: 0 0 10px 0;
+            line-height: 1.1;
         }
 
-        .countdown-container { 
-            display: flex; justify-content: center; 
-            gap: 12px; margin: 20px 0 30px 0; 
+        /* --- COMPTEUR --- */
+        .countdown {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            color: var(--texte-gris);
+            justify-content: center;
         }
 
-        .unit {
-            width: 65px; height: 65px; 
-            background: rgba(0,0,0,0.7);
-            border: 1px solid rgba(244,228,188,0.2);
-            backdrop-filter: blur(8px);
-            border-radius: 8px;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        .count-box { display: flex; flex-direction: column; align-items: center; min-width: 45px;}
+        .count-num { 
+            font-size: 1.1rem;
+            font-weight: 400; 
+            color: var(--or-luxe);
+            font-family: 'Cormorant Garamond', serif; 
+        } 
+        .count-label { 
+            font-size: 0.55rem;
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            margin-top: 2px; 
+            opacity: 0.7; 
         }
 
-        .num { font-size: 1.5rem; font-weight: 600; color: #fff; }
-        .label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1.5px; }
-
-        .date {
-            font-size: 1rem; letter-spacing: 5px; 
-            padding: 12px 0; min-width: 250px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            /* BOUTON DESCENDU ICI */
-            margin-bottom: 110px; 
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        /* --- BOUTON --- */
+        .btn {
+            background-color: var(--or-luxe);
+            color: #fff;
+            text-decoration: none;
+            padding: 14px 35px;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
+            border: 1px solid var(--or-luxe);
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(176, 141, 87, 0.2);
+            position: relative;
+            z-index: 15; /* Pour être cliquable malgré l'overlay */
         }
 
-        .enter-btn {
-            display: inline-block; 
-            width: 90%; max-width: 380px;
-            padding: 22px;
-            background: linear-gradient(45deg, var(--btn-grad-1), var(--btn-grad-2));
-            color: #444;
-            text-decoration: none; 
-            font-size: 0.95rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 3px;
-            border-radius: 50px; 
-            box-shadow: 0 10px 25px rgba(167,199,231,0.5);
-            transition: transform 0.2s ease;
+        .btn:hover { 
+            background-color: var(--blanc-pur); 
+            color: var(--or-luxe); 
+            transform: translateY(-2px);
         }
 
-        .enter-btn:active {
-            transform: scale(0.97);
-        }
-
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateY(calc(-7vh + 30px)); } 
-            to { opacity: 1; transform: translateY(-7vh); } 
-        }
-
-        @media (max-width: 480px) {
-            h1 { font-size: 3.5rem; }
-            /* Ajustement pour mobile pour ne pas que le bouton sorte de l'écran */
-            .date { margin-bottom: 90px; }
-            .enter-btn { padding: 18px; }
+        @media (max-width: 380px) {
+            .photo-container { width: 120px; height: 170px; }
+            h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-image"></div>
 
-    <div class="intro-container">
-        <h1>Mayane & Mikhael</h1>
+    <div id="global-page-content">
+        
+        <div class="background-container"></div>
+        <div class="floral-overlay"></div> <div id="gold-rain-container"></div>
 
-        <div class="countdown-container" id="timer">
-            <div class="unit"><span class="num" id="days">00</span><span class="label">Jours</span></div>
-            <div class="unit"><span class="num" id="hours">00</span><span class="label">Hrs</span></div>
-            <div class="unit"><span class="num" id="mins">00</span><span class="label">Min</span></div>
-            <div class="unit"><span class="num" id="secs">00</span><span class="label">Sec</span></div>
+        <div class="card-wrapper">
+            
+            <div class="photo-container">
+                <img src="photo.jpeg" alt="Ornella et Charles">
+            </div>
+            
+            <h1>Ornella & Charles</h1>
+            
+            <div class="countdown" id="countdown">
+                <div class="count-box"><span class="count-num" id="d">00</span><span class="count-label">Jours</span></div>
+                <div class="count-box"><span class="count-num" id="h">00</span><span class="count-label">Heures</span></div>
+                <div class="count-box"><span class="count-num" id="m">00</span><span class="count-label">Min</span></div>
+                <div class="count-box"><span class="count-num" id="s">00</span><span class="count-label">Sec</span></div>
+            </div>
+
+            <a href="premiere-page.html" class="btn" id="open-btn">Voir l'invitation</a>
+
         </div>
-
-        <p class="date">29 JUILLET 2026</p>
-
-        <a href="invitation.html" class="enter-btn">Découvrir l'invitation</a>
     </div>
 
     <script>
-        const targetDate = new Date("July 29, 2026 17:30:00").getTime();
-        function updateCountdown() {
+        // Date du mariage : 29 Juillet 2026
+        const targetDate = new Date(2026, 6, 29, 17, 30, 0).getTime();
+
+        setInterval(() => {
             const now = new Date().getTime();
             const diff = targetDate - now;
+
             if (diff > 0) {
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const m = Math.floor((diff / (1000 * 60)) % 60);
-                const s = Math.floor((diff / 1000) % 60);
-                document.getElementById("days").innerText = d.toString().padStart(2, "0");
-                document.getElementById("hours").innerText = h.toString().padStart(2, "0");
-                document.getElementById("mins").innerText = m.toString().padStart(2, "0");
-                document.getElementById("secs").innerText = s.toString().padStart(2, "0");
-            } else {
-                document.getElementById("timer").innerHTML = "<h2 style='font-family:Great Vibes;color:white;font-size:2rem;'>C'est le grand jour ✨</h2>";
+                document.getElementById("d").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById("h").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("m").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("s").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            }
+        }, 1000);
+
+        function createGoldRain() {
+            const container = document.getElementById('gold-rain-container');
+            for (let i = 0; i < 40; i++) {
+                const speck = document.createElement('div');
+                speck.classList.add('gold-speck');
+                speck.style.left = Math.random() * 100 + '%';
+                speck.style.animationDuration = (Math.random() * 5 + 4) + 's';
+                speck.style.animationDelay = (Math.random() * 5) + 's';
+                speck.style.opacity = Math.random() * 0.6;
+                container.appendChild(speck);
             }
         }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        createGoldRain();
+
+        document.getElementById('open-btn').addEventListener('click', function(e) {
+            e.preventDefault(); 
+            const link = this.getAttribute('href'); 
+            document.getElementById('global-page-content').classList.add('page-turn-active');
+            setTimeout(() => { window.location.href = link; }, 1000);
+        });
     </script>
+
 </body>
 </html>
