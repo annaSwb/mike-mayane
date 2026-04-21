@@ -4,88 +4,152 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mayane & Mikhael | L'Union</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --sage: #7A9085; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gold-light: #f4e4bc;
+            --btn-grad-1: #A7C7E7; 
+            --btn-grad-2: #C1E1C1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            background-color: #fffafb; /* Un blanc très légèrement rosé */
+            background-color: #0a0a0a;
+            color: var(--gold-light);
             font-family: 'Montserrat', sans-serif;
             height: 100dvh; width: 100vw; 
-            display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; 
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Conteneur pour les pétales */
-        .petals-container {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; /* Ne bloque pas le clic sur le bouton */
-            overflow: hidden;
-        }
-
-        .petal {
-            position: absolute;
-            background-color: #FFB6C1;
-            border-radius: 0 50% 50% 50%;
-            opacity: 0.6;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); }
-            100% { transform: translateY(110vh) rotate(360deg); }
+            overflow: hidden; 
+            display: flex; justify-content: center; align-items: center; 
+            text-align: center; position: relative;
         }
 
         .bg-image {
-            width: 80%; max-width: 500px;
-            margin-bottom: 40px;
-            background: url('couple.png') no-repeat center center / contain;
-            aspect-ratio: 1/1; 
-            z-index: 1;
+            position: absolute; top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            z-index: -1;
+            background: url('couple.jpeg') no-repeat center center / cover;
+            filter: brightness(0.55) saturate(0.85); 
+        }
+
+        /* TOUT LE BLOC EST DESCENDU ICI */
+        .intro-container {
+            z-index: 1; 
+            opacity: 0; 
+            animation: fadeIn 2s ease-out forwards 0.5s;
+            width: 100%; padding: 0 20px;
+            display: flex; flex-direction: column; align-items: center;
+            /* Changé de -7vh à 2vh pour tout descendre d'un coup */
+            transform: translateY(2vh); 
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(3.5rem, 15vw, 5.8rem);
+            font-weight: 400;
+            margin-bottom: 5px;
+            background: linear-gradient(to bottom, #fff, var(--gold-light));
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.9);
+            padding-bottom: 5px;
+        }
+
+        .countdown-container { 
+            display: flex; justify-content: center; 
+            gap: 12px; margin: 20px 0 30px 0; 
+        }
+
+        .unit {
+            width: 65px; height: 65px; 
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(244,228,188,0.2);
+            backdrop-filter: blur(8px);
+            border-radius: 8px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        .num { font-size: 1.5rem; font-weight: 600; color: #fff; }
+        .label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1.5px; }
+
+        .date {
+            font-size: 1rem; letter-spacing: 5px; 
+            padding: 12px 0; min-width: 250px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 110px; 
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
         }
 
         .enter-btn {
-            position: relative;
-            z-index: 2;
-            padding: 18px 40px;
-            background: linear-gradient(45deg, #FFB6C1, #FFD700); 
-            color: white;
+            display: inline-block; 
+            width: 90%; max-width: 380px;
+            padding: 22px;
+            background: linear-gradient(45deg, var(--btn-grad-1), var(--btn-grad-2));
+            color: #444;
             text-decoration: none; 
-            font-size: 0.9rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 2px;
+            font-size: 0.95rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 3px;
             border-radius: 50px; 
-            box-shadow: 0 10px 25px rgba(255,182,193,0.5); 
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(167,199,231,0.5);
+            transition: transform 0.2s ease;
         }
 
-        .enter-btn:active { transform: scale(0.95); }
+        .enter-btn:active {
+            transform: scale(0.97);
+        }
+
+        @keyframes fadeIn { 
+            /* On synchronise l'animation avec la nouvelle position */
+            from { opacity: 0; transform: translateY(calc(2vh + 30px)); } 
+            to { opacity: 1; transform: translateY(2vh); } 
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 3.5rem; }
+            .date { margin-bottom: 90px; }
+            .enter-btn { padding: 18px; }
+        }
     </style>
 </head>
 <body>
-
-    <div class="petals-container" id="petals"></div>
-
     <div class="bg-image"></div>
-    <a href="invitation.html" class="enter-btn">Voir l'invitation</a>
+
+    <div class="intro-container">
+        <h1>Mayane & Mikhael</h1>
+
+        <div class="countdown-container" id="timer">
+            <div class="unit"><span class="num" id="days">00</span><span class="label">Jours</span></div>
+            <div class="unit"><span class="num" id="hours">00</span><span class="label">Hrs</span></div>
+            <div class="unit"><span class="num" id="mins">00</span><span class="label">Min</span></div>
+            <div class="unit"><span class="num" id="secs">00</span><span class="label">Sec</span></div>
+        </div>
+
+        <p class="date">29 JUILLET 2026</p>
+
+        <a href="invitation.html" class="enter-btn">Découvrir l'invitation</a>
+    </div>
 
     <script>
-        // Génération automatique de pétales
-        const container = document.getElementById('petals');
-        for (let i = 0; i < 15; i++) {
-            const petal = document.createElement('div');
-            petal.className = 'petal';
-            const size = Math.random() * 15 + 10 + 'px';
-            petal.style.width = size;
-            petal.style.height = size;
-            petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.animationDuration = Math.random() * 5 + 5 + 's';
-            petal.style.animationDelay = Math.random() * 5 + 's';
-            container.appendChild(petal);
+        const targetDate = new Date("July 29, 2026 17:30:00").getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            if (diff > 0) {
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const m = Math.floor((diff / (1000 * 60)) % 60);
+                const s = Math.floor((diff / 1000) % 60);
+                document.getElementById("days").innerText = d.toString().padStart(2, "0");
+                document.getElementById("hours").innerText = h.toString().padStart(2, "0");
+                document.getElementById("mins").innerText = m.toString().padStart(2, "0");
+                document.getElementById("secs").innerText = s.toString().padStart(2, "0");
+            } else {
+                document.getElementById("timer").innerHTML = "<h2 style='font-family:Great Vibes;color:white;font-size:2rem;'>C'est le grand jour ✨</h2>";
+            }
         }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
     </script>
 </body>
 </html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Invitation | Houppa & Soirée</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+   <style>
+    /* Couleurs ajustées pour plus de contraste et de lisibilité */
+    :root { 
+        --sage: #6B7F76;         /* Vert sauge plus sombre */
+        --dusty-blue: #A0B4CC; 
+        --gold: #C5A059; 
+        --pink: #E8A8B5;         /* Rose plus soutenu/foncé */
+        --soft-white: #FDFBF7; 
+        --text-dark: #2c2c2c; 
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body { background-color: var(--soft-white); color: var(--text-dark); font-family: 'Montserrat', sans-serif; overflow-x: hidden; background-image: radial-gradient(circle at center, #FBF6EE 0%, #EDE4D3 100%); line-height: 1.5; padding-top: 40px; }
+    
+    .cormorant { font-family: 'Cormorant Garamond', serif; }
+    .container { max-width: 650px; margin: 0 auto 40px; padding: 0 15px; }
+    
+    .wedding-card { background: rgba(245, 237, 224, 0.97); border-radius: 15px; padding: 25px 20px; margin-bottom: 25px; border: 1px solid rgba(197, 160, 89, 0.15); box-shadow: 0 10px 25px rgba(0,0,0,0.07); text-align: center; position: relative; }
+    .wedding-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--pink), var(--sage), var(--pink)); border-radius: 15px 15px 0 0; }
+    
+    .card-type { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: var(--pink); margin-bottom: 10px; font-weight: 600; }
+    .card-title { font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--sage); margin-bottom: 10px; }
+    .highlight { color: var(--pink); font-weight: 700; display: block; margin: 5px 0; font-size: 1.15rem; }
+    
+    .btn-action { display: inline-flex; justify-content: center; align-items: center; width: 100%; padding: 14px; background: linear-gradient(45deg, var(--sage), var(--pink)); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; text-transform: uppercase; border: none; cursor: pointer; }
+    .btn-outline { background: transparent; border: 2px solid var(--sage); color: var(--sage); margin-top: 10px; width: auto; padding: 10px 15px; font-size: 0.8rem; font-weight: 700; }
+    
+    .family-container { display: flex; justify-content: space-between; align-items: flex-start; margin: 25px 0; text-align: center; font-size: 0.85rem; line-height: 1.6; gap: 10px; }
+    .family-box { flex: 1; font-style: italic; color: var(--sage); font-weight: 500; }
+    
+    .rsvp-form { text-align: left; margin-top: 20px; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 8px; color: var(--sage); text-transform: uppercase; }
+    input, select, textarea { width: 100%; padding: 12px; border: 2px solid var(--pink); border-radius: 8px; font-weight: 500; }
+    
+    hr { border: 0; border-top: 2px solid var(--pink); margin: 25px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="wedding-card">
+        <img src="phrase12.png" alt="Bénédiction" style="width: 100%; max-width: 650px; margin: 0 auto 20px; display: block;">
+        <img src="houppa.png" alt="Houppa Decor" style="width: 95%; max-width: 550px; margin: 20px auto 25px; display: block; border-radius: 10px;">
+        <p class="card-type">La Houppa & Soirée</p>
+        
+        <div class="family-container">
+            <div class="family-box">Mme Chouissa Lydie<br>Mr Elie et Claudine Zarka<br>Mr Claude et Martine Chouissa<br>Mme Karine Taieb<br>Mr Steve et Elodie Zarka</div>
+            <div class="family-box">Mme Annette MALKA<br>Mme Odette ZANA<br>Mr Franck et Ledicia Zana</div>
+        </div>
+
+        <p style="margin: 20px 0 30px; font-size: 0.95rem; color: var(--sage); font-weight: 500; font-style: italic;">
+            Remercient Hachem de vous convier au mariage<br>de leurs enfants et petits-enfants
+        </p>
+
+        <span class="cormorant" style="font-size: 2.3rem; color: var(--sage); display: block; margin-bottom: 5px;">Mayane & Mikhael</span>
+        <span class="cormorant" style="font-size: 1.8rem; color: var(--pink); display: block; margin-bottom: 15px;">מעיין שמחה & מיכאל צבי</span>
+        <span class="highlight">Mercredi 29 Juillet 2026</span>
+        <p style="color: var(--sage);">Aux <span style="color:var(--pink);">A la salle la Marquise, les Pyramides</span><br>Accueil à : <span style="color:var(--pink);">17h30</span></p>
+        
+        <div style="margin-top: 20px;">
+            <a href="https://www.waze.com/ul?q=Les+Pyramides+Le+Port+Marly" target="_blank" class="btn-action btn-outline">Waze</a>
+            <button onclick="addToCalendar('houppa')" class="btn-action btn-outline">Bloquer la Date</button>
+        </div>
+    </div>
+
+    <div class="wedding-card">
+        <p class="card-type">Réponse souhaitée</p>
+        <h3 class="card-title cormorant" style="color: var(--sage);">Confirmation</h3>
+        <form id="rsvpForm" class="rsvp-form">
+            <div class="form-group"><label>Nom & Prénom</label><input type="text" name="nom_complet" required></div>
+            <hr>
+            <div class="form-group"><label>Présent à la Mairie ?</label>
+                <select name="presence_mairie" id="presence_mairie" onchange="toggleMairie()" required>
+                    <option value="" disabled selected>Choisissez...</option>
+                    <option value="oui">OUI</option>
+                    <option value="non">NON</option>
+                </select>
+            </div>
+            <div id="section_mairie" style="display:none;"><div class="form-group"><label>Nb personnes Mairie</label><input type="number" name="adultes_mairie" value="0"></div></div>
+            
+            <div class="form-group"><label>Présent à la Houppa ?</label>
+                <select name="presence_houppa" id="presence_houppa" onchange="toggleHouppa()" required>
+                    <option value="" disabled selected>Choisissez...</option>
+                    <option value="oui">OUI</option>
+                    <option value="non">NON</option>
+                </select>
+            </div>
+            <div id="section_houppa" style="display:none;"><div class="form-group"><label>Nb personnes Houppa</label><input type="number" name="adultes_houppa" value="0"></div></div>
+            
+            <hr>
+            <div class="form-group"><label>Message</label><textarea name="message" rows="3"></textarea></div>
+            <button type="submit" id="submitBtn" class="btn-action">Envoyer ma réponse</button>
+        </form>
+    </div>
+    <a href="index.html" style="display:block; text-align:center; color:var(--sage); margin-bottom: 30px;">&laquo; Retour Mairie</a>
+</div>
+
+<script>
+    // COLLE TA CLÉ API ICI (la suite de caractères de ton URL Google Script)
+    const Ma_Cle_API = "TA_CLE_ICI"; 
+    const scriptURL = 'https://script.google.com/macros/s/' + Ma_Cle_API + '/exec';
+    
+    const form = document.getElementById('rsvpForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Envoi en cours...";
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
+            .then(() => { alert("Enregistré !"); submitBtn.innerText = "Merci ! ✨"; })
+            .catch(() => { alert("Erreur."); submitBtn.disabled = false; });
+    });
+
+    function toggleMairie() { document.getElementById('section_mairie').style.display = (document.getElementById('presence_mairie').value === 'oui') ? 'block' : 'none'; }
+    function toggleHouppa() { document.getElementById('section_houppa').style.display = (document.getElementById('presence_houppa').value === 'oui') ? 'block' : 'none'; }
+    
+    function addToCalendar(type) {
+        const url = "https://www.google.com/calendar/render?action=TEMPLATE&text=Mariage+Mayane+%26+Mikhael+-+Houppa&dates=20260729T153000Z/20260729T220000Z&location=Les+Pyramides+Port+Marly";
+        window.open(url, '_blank');
+    }
+</script>
+</body>
+</html>
