@@ -14,13 +14,14 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             background-color: var(--soft-white); 
-            color: var(--sage); /* Texte principal en vert */
+            color: var(--sage); 
             font-family: 'Montserrat', sans-serif; 
             background-image: radial-gradient(circle at center, #FBF6EE 0%, #EDE4D3 100%); 
             min-height: 100vh; 
             padding-bottom: 50px; 
         }
         .container { max-width: 650px; margin: 0 auto; padding: 20px; }
+        
         .wedding-card { 
             background: rgba(245, 237, 224, 0.97); 
             border-radius: 15px; 
@@ -31,13 +32,20 @@
             position: relative; 
             margin-top: 30px; 
         }
-        .wedding-card::before { 
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; 
-            background: linear-gradient(90deg, var(--pink), var(--sage), var(--pink)); 
-            border-radius: 15px 15px 0 0; 
-        }
+        
         .logo-inside { width: 140px; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto; }
-        .mairie-img { width: 100%; border-radius: 10px; margin-bottom: 20px; }
+        
+        /* Photo réduite et ajustée pour un affichage "dézoomé" parfait */
+        .mairie-img { 
+            width: auto; 
+            height: auto; 
+            max-width: 80%; 
+            max-height: 250px; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+            object-fit: contain; /* S'assure que l'image n'est pas rognée */
+        }
         
         /* Boutons */
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 25px; }
@@ -62,6 +70,7 @@
     <div class="container">
         <div class="wedding-card">
             <img src="logo.png" alt="Mayane & Mikhael" class="logo-inside">
+            
             <img src="mairie.png" alt="Mairie" class="mairie-img">
             
             <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: var(--sage); margin-bottom: 10px;">La Mairie</h3>
