@@ -32,14 +32,12 @@
             filter: brightness(0.55) saturate(0.85); 
         }
 
-        /* TOUT LE BLOC EST DESCENDU ICI */
         .intro-container {
             z-index: 1; 
             opacity: 0; 
             animation: fadeIn 2s ease-out forwards 0.5s;
             width: 100%; padding: 0 20px;
             display: flex; flex-direction: column; align-items: center;
-            /* Changé de -7vh à 2vh pour tout descendre d'un coup */
             transform: translateY(2vh); 
         }
 
@@ -91,18 +89,36 @@
             font-size: 0.95rem; font-weight: 600;
             text-transform: uppercase; letter-spacing: 3px;
             border-radius: 50px; 
+            border: none; cursor: pointer;
             box-shadow: 0 10px 25px rgba(167,199,231,0.5);
             transition: transform 0.2s ease;
         }
 
-        .enter-btn:active {
-            transform: scale(0.97);
-        }
+        .enter-btn:active { transform: scale(0.97); }
 
         @keyframes fadeIn { 
-            /* On synchronise l'animation avec la nouvelle position */
             from { opacity: 0; transform: translateY(calc(2vh + 30px)); } 
             to { opacity: 1; transform: translateY(2vh); } 
+        }
+
+        /* ── IFRAME OVERLAY ── */
+        #invitation-frame {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        #invitation-frame.visible {
+            display: block;
+        }
+
+        #invitation-frame.fade-in {
+            opacity: 1;
         }
 
         @media (max-width: 480px) {
@@ -114,6 +130,11 @@
 </head>
 <body>
     <div class="bg-image"></div>
+
+    <!-- Musique en fond — persiste tant que index.html reste chargé -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="musique.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="intro-container">
         <h1>Mayane & Mikhael</h1>
@@ -127,11 +148,14 @@
 
         <p class="date">29 JUILLET 2026</p>
 
-        <a href="invitation.html" class="enter-btn" id="btn-discover" target="_blank">Découvrir l'invitation</a>
+        <button class="enter-btn" id="btn-discover">Découvrir l'invitation</button>
     </div>
 
+    <!-- invitation.html se charge ici sans quitter la page = musique continue -->
+    <iframe id="invitation-frame" src="" title="Invitation"></iframe>
+
     <script>
-        // Countdown
+        // ── COUNTDOWN ──
         const targetDate = new Date("July 29, 2026 17:30:00").getTime();
         function updateCountdown() {
             const now = new Date().getTime();
@@ -152,8 +176,36 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // La musique est gérée dans invitation.html directement
-        // car les navigateurs bloquent l'audio sur un onglet en arrière-plan
+        // ── MUSIQUE ──
+        // Tentative d'autoplay dès le chargement.
+        // Si le navigateur refuse (politique anti-autoplay), elle démarrera
+        // automatiquement au premier clic/toucher de l'utilisateur.
+        const music = document.getElementById("bg-music");
+
+        function startMusic() {
+            if (music.paused) {
+                music.play().catch(() => {});
+            }
+        }
+
+        window.addEventListener("load", startMusic);
+
+        // Fallback garanti : 1er geste utilisateur n'importe où sur la page
+        document.addEventListener("click", startMusic, { once: true });
+        document.addEventListener("touchstart", startMusic, { once: true });
+
+        // ── BOUTON → IFRAME (zéro changement de page = zéro coupure audio) ──
+        document.getElementById("btn-discover").addEventListener("click", function () {
+            startMusic(); // lance aussi si pas encore démarré
+
+            const frame = document.getElementById("invitation-frame");
+            frame.src = "invitation.html";
+            frame.classList.add("visible");
+            // Double rAF pour laisser display:block s'appliquer avant la transition opacity
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => frame.classList.add("fade-in"));
+            });
+        });
     </script>
 </body>
 </html>
