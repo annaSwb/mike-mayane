@@ -6,42 +6,58 @@
     <title>Mayane & Mikhael | L'Union</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --sage: #7A9085;
-        }
-
+        :root { --sage: #7A9085; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #fff;
+            background-color: #fffafb; /* Un blanc très légèrement rosé */
             font-family: 'Montserrat', sans-serif;
             height: 100dvh; width: 100vw; 
             display: flex; flex-direction: column; 
             justify-content: center; align-items: center; 
             overflow: hidden;
+            position: relative;
+        }
+
+        /* Conteneur pour les pétales */
+        .petals-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; /* Ne bloque pas le clic sur le bouton */
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            background-color: #FFB6C1;
+            border-radius: 0 50% 50% 50%;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(360deg); }
         }
 
         .bg-image {
-            width: 80%; /* Ajustez la taille selon votre préférence */
-            max-width: 500px;
-            height: auto;
+            width: 80%; max-width: 500px;
             margin-bottom: 40px;
-            /* Remplacer 'couple.png' par le nom de votre fichier image */
             background: url('couple.png') no-repeat center center / contain;
             aspect-ratio: 1/1; 
+            z-index: 1;
         }
 
         .enter-btn {
-            display: inline-block; 
+            position: relative;
+            z-index: 2;
             padding: 18px 40px;
-            /* Dégradé rose clair et or */
             background: linear-gradient(45deg, #FFB6C1, #FFD700); 
             color: white;
             text-decoration: none; 
             font-size: 0.9rem; font-weight: 600;
             text-transform: uppercase; letter-spacing: 2px;
             border-radius: 50px; 
-            /* Ombre portée douce teintée de rose */
             box-shadow: 0 10px 25px rgba(255,182,193,0.5); 
             transition: transform 0.3s ease;
         }
@@ -51,9 +67,25 @@
 </head>
 <body>
 
-    <div class="bg-image"></div>
+    <div class="petals-container" id="petals"></div>
 
+    <div class="bg-image"></div>
     <a href="invitation.html" class="enter-btn">Voir l'invitation</a>
 
+    <script>
+        // Génération automatique de pétales
+        const container = document.getElementById('petals');
+        for (let i = 0; i < 15; i++) {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            const size = Math.random() * 15 + 10 + 'px';
+            petal.style.width = size;
+            petal.style.height = size;
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = Math.random() * 5 + 5 + 's';
+            petal.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(petal);
+        }
+    </script>
 </body>
 </html>
