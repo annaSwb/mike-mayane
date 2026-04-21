@@ -113,24 +113,48 @@
 </div>
 
 <script>
-    // COLLE TA CLÉ API ICI (la suite de caractères de ton URL Google Script)
-    const Ma_Cle_API = "https://script.google.com/macros/s/AKfycby0YBj1vF_3lgo3eST_kUOGxhjPIQkxALD2nu3w5-SAlmQFld2WWl9CpIMBbaz-cjNm/exec"; 
-    const scriptURL = 'https://script.google.com/macros/s/' + Ma_Cle_API + '/exec';
+    // URL complète de ton script Google
+    const scriptURL = "https://script.google.com/macros/s/AKfycby0YBj1vF_3lgo3eST_kUOGxhjPIQkxALD2nu3w5-SAlmQFld2WWl9CpIMBbaz-cjNm/exec"; 
     
     const form = document.getElementById('rsvpForm');
     const submitBtn = document.getElementById('submitBtn');
 
     form.addEventListener('submit', e => {
         e.preventDefault();
+        
         submitBtn.disabled = true;
         submitBtn.innerText = "Envoi en cours...";
-        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
-            .then(() => { alert("Enregistré !"); submitBtn.innerText = "Merci ! ✨"; })
-            .catch(() => { alert("Erreur."); submitBtn.disabled = false; });
+
+        // On utilise FormData pour récupérer toutes les données du formulaire proprement
+        const formData = new FormData(form);
+
+        fetch(scriptURL, { 
+            method: 'POST', 
+            mode: 'no-cors', // Mode nécessaire pour Google Apps Script
+            body: formData 
+        })
+        .then(() => { 
+            // Avec no-cors, on tombe ici presque systématiquement
+            alert("Merci ! Votre réponse a bien été enregistrée. ✨"); 
+            submitBtn.innerText = "Envoyé !";
+            form.reset(); // Vide le formulaire après l'envoi
+        })
+        .catch(error => { 
+            console.error('Erreur:', error);
+            alert("Désolé, une erreur est survenue. Réessayez plus tard."); 
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Envoyer ma réponse";
+        });
     });
 
-    function toggleMairie() { document.getElementById('section_mairie').style.display = (document.getElementById('presence_mairie').value === 'oui') ? 'block' : 'none'; }
-    function toggleHouppa() { document.getElementById('section_houppa').style.display = (document.getElementById('presence_houppa').value === 'oui') ? 'block' : 'none'; }
+    // Fonctions d'affichage conditionnel (inchangées)
+    function toggleMairie() { 
+        document.getElementById('section_mairie').style.display = (document.getElementById('presence_mairie').value === 'oui') ? 'block' : 'none'; 
+    }
+    
+    function toggleHouppa() { 
+        document.getElementById('section_houppa').style.display = (document.getElementById('presence_houppa').value === 'oui') ? 'block' : 'none'; 
+    }
     
     function addToCalendar(type) {
         const url = "https://www.google.com/calendar/render?action=TEMPLATE&text=Mariage+Mayane+%26+Mikhael+-+Houppa&dates=20260729T153000Z/20260729T220000Z&location=Les+Pyramides+Port+Marly";
