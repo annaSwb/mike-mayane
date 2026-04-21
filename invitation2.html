@@ -113,7 +113,6 @@
 </div>
 
 <script>
-    // Ici, on met l'URL exacte sans faire de calculs compliqués
     const scriptURL = "https://script.google.com/macros/s/AKfycby0YBj1vF_3lgo3eST_kUOGxhjPIQkxALD2nu3w5-SAlmQFld2WWl9CpIMBbaz-cjNm/exec"; 
     
     const form = document.getElementById('rsvpForm');
@@ -124,21 +123,23 @@
         submitBtn.disabled = true;
         submitBtn.innerText = "Envoi en cours...";
 
+        // On force la récupération des données
+        const formData = new FormData(form);
+
         fetch(scriptURL, { 
             method: 'POST', 
-            mode: 'no-cors', 
-            body: new FormData(form) 
+            mode: 'no-cors', // Obligatoire pour Google Apps Script
+            body: formData
         })
-        .then(() => { 
-            // Avec 'no-cors', on arrive ici même si le script Google a un petit souci, 
-            // mais si l'URL est bonne, les données sont enregistrées.
+        .then(response => {
+            // Si on arrive ici, le navigateur a contacté Google avec succès
             alert("Enregistré ! Vos données ont été transmises. ✨"); 
             submitBtn.innerText = "Merci ! ✨"; 
-            form.reset(); // Vide le formulaire
+            form.reset();
         })
-        .catch((err) => { 
-            console.error(err);
-            alert("Erreur de connexion au serveur."); 
+        .catch(err => {
+            console.error('Erreur détaillée:', err);
+            alert("Erreur de connexion."); 
             submitBtn.disabled = false; 
             submitBtn.innerText = "Envoyer ma réponse";
         });
@@ -147,11 +148,9 @@
     function toggleMairie() { 
         document.getElementById('section_mairie').style.display = (document.getElementById('presence_mairie').value === 'oui') ? 'block' : 'none'; 
     }
-    
     function toggleHouppa() { 
         document.getElementById('section_houppa').style.display = (document.getElementById('presence_houppa').value === 'oui') ? 'block' : 'none'; 
     }
-    
     function addToCalendar(type) {
         const url = "https://www.google.com/calendar/render?action=TEMPLATE&text=Mariage+Mayane+%26+Mikhael+-+Houppa&dates=20260729T153000Z/20260729T220000Z&location=Les+Pyramides+Port+Marly";
         window.open(url, '_blank');
