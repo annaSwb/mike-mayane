@@ -127,10 +127,11 @@
 
         <p class="date">29 JUILLET 2026</p>
 
-        <a href="invitation.html" class="enter-btn" target="_blank">Découvrir l'invitation</a>
+        <a href="invitation.html" class="enter-btn" id="btn-discover" target="_blank">Découvrir l'invitation</a>
     </div>
 
     <script>
+        // Countdown
         const targetDate = new Date("July 29, 2026 17:30:00").getTime();
         function updateCountdown() {
             const now = new Date().getTime();
@@ -150,6 +151,9 @@
         }
         setInterval(updateCountdown, 1000);
         updateCountdown();
+
+        // La musique est gérée dans invitation.html directement
+        // car les navigateurs bloquent l'audio sur un onglet en arrière-plan
     </script>
 </body>
 </html>
