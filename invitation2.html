@@ -113,7 +113,7 @@
 </div>
 
 <script>
-    // URL complète de ton script Google
+    // Ici, on met l'URL exacte sans faire de calculs compliqués
     const scriptURL = "https://script.google.com/macros/s/AKfycby0YBj1vF_3lgo3eST_kUOGxhjPIQkxALD2nu3w5-SAlmQFld2WWl9CpIMBbaz-cjNm/exec"; 
     
     const form = document.getElementById('rsvpForm');
@@ -121,33 +121,29 @@
 
     form.addEventListener('submit', e => {
         e.preventDefault();
-        
         submitBtn.disabled = true;
         submitBtn.innerText = "Envoi en cours...";
 
-        // On utilise FormData pour récupérer toutes les données du formulaire proprement
-        const formData = new FormData(form);
-
         fetch(scriptURL, { 
             method: 'POST', 
-            mode: 'no-cors', // Mode nécessaire pour Google Apps Script
-            body: formData 
+            mode: 'no-cors', 
+            body: new FormData(form) 
         })
         .then(() => { 
-            // Avec no-cors, on tombe ici presque systématiquement
-            alert("Merci ! Votre réponse a bien été enregistrée. ✨"); 
-            submitBtn.innerText = "Envoyé !";
-            form.reset(); // Vide le formulaire après l'envoi
+            // Avec 'no-cors', on arrive ici même si le script Google a un petit souci, 
+            // mais si l'URL est bonne, les données sont enregistrées.
+            alert("Enregistré ! Vos données ont été transmises. ✨"); 
+            submitBtn.innerText = "Merci ! ✨"; 
+            form.reset(); // Vide le formulaire
         })
-        .catch(error => { 
-            console.error('Erreur:', error);
-            alert("Désolé, une erreur est survenue. Réessayez plus tard."); 
-            submitBtn.disabled = false;
+        .catch((err) => { 
+            console.error(err);
+            alert("Erreur de connexion au serveur."); 
+            submitBtn.disabled = false; 
             submitBtn.innerText = "Envoyer ma réponse";
         });
     });
 
-    // Fonctions d'affichage conditionnel (inchangées)
     function toggleMairie() { 
         document.getElementById('section_mairie').style.display = (document.getElementById('presence_mairie').value === 'oui') ? 'block' : 'none'; 
     }
